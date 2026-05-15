@@ -152,16 +152,6 @@ Production muhitga deploy qilish uchun **[DEPLOY.md](DEPLOY.md)** faylini o'qing
 2. Cloud (Vercel + Heroku/Railway)
 3. Docker
 
----
-
-## 📞 Aloqa
-
-**Yaratuvchilar:** NLP-Core-Team
-**Versiya:** 1.0.0  
-**Sana:** 2024-05-15
-
----
-
 ## 📝 License
 
 © 2024 AvtoTester.uz - Barcha huquqlar himoyalangan
@@ -376,15 +366,4 @@ npm run build
 - AI tavsiyalar
 - Native mobile app
 
-## 📝 License
 
-© 2024 AvtoTester.uz - Barcha huquqlar himoyalangan
-
-## 📞 Aloqa
-
-- Telegram: @avtotester_uz
-- Website: https://avtotester.uz
-
----
-
-**Yaratuvchilar:** NLP-Core-Team
