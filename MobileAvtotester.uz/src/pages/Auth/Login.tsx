@@ -30,9 +30,16 @@ export default function Login({ checkAuth }: LoginProps) {
     setError('')
 
     try {
-      await server.login(username, password)
+      const res = await server.login(username, password)
       await checkAuth()
-      navigate(from, { replace: true })
+      const role = res.data.user.role
+      if (role === 'SUPERADMIN') {
+        navigate('/superadmin', { replace: true })
+      } else if (role === 'ADMIN' || role === 'TENANT_ADMIN') {
+        navigate('/admin', { replace: true })
+      } else {
+        navigate(from, { replace: true })
+      }
     } catch (err: any) {
       setError(err.message || 'Kirish xatosi')
     } finally {

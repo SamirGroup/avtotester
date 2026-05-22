@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BarChart3, TrendingUp, Award, Target } from 'lucide-react'
-import server from '../utils/Backend'
+import server from '../../utils/Backend'
 
 export default function Statistics() {
   const [stats, setStats] = useState<any>(null)

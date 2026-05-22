@@ -186,6 +186,136 @@ class ServerConnection {
     return response.data.data
   }
 
+  // ========================================================================
+  // SUPERADMIN APIs
+  // ========================================================================
+  async superadminDashboard(): Promise<any> {
+    const response = await axios.get(`${this.baseUrl}/superadmin/dashboard/`, {
+      headers: this.getHeaders()
+    })
+    return response.data.data
+  }
+
+  async getOrganizations(status?: string): Promise<any[]> {
+    const url = status
+      ? `${this.baseUrl}/superadmin/organization/?status=${status}`
+      : `${this.baseUrl}/superadmin/organization/`
+    const response = await axios.get(url, { headers: this.getHeaders() })
+    return response.data.data || []
+  }
+
+  async createOrganization(data: any): Promise<any> {
+    const response = await axios.post(
+      `${this.baseUrl}/superadmin/organization/`,
+      data,
+      { headers: this.getHeaders() }
+    )
+    return response.data.data
+  }
+
+  async getOrganizationDetail(orgId: number): Promise<any> {
+    const response = await axios.get(
+      `${this.baseUrl}/superadmin/organization/${orgId}/`,
+      { headers: this.getHeaders() }
+    )
+    return response.data.data
+  }
+
+  async updateOrganization(orgId: number, data: any): Promise<any> {
+    const response = await axios.put(
+      `${this.baseUrl}/superadmin/organization/${orgId}/`,
+      data,
+      { headers: this.getHeaders() }
+    )
+    return response.data.data
+  }
+
+  async deleteOrganization(orgId: number): Promise<any> {
+    const response = await axios.delete(
+      `${this.baseUrl}/superadmin/organization/${orgId}/`,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async getOrganizationStatistics(orgId: number): Promise<any> {
+    const response = await axios.get(
+      `${this.baseUrl}/superadmin/organization/${orgId}/statistics/`,
+      { headers: this.getHeaders() }
+    )
+    return response.data.data
+  }
+
+  async getOrganizationStudents(orgId: number): Promise<any[]> {
+    const response = await axios.get(
+      `${this.baseUrl}/superadmin/organization/${orgId}/students/`,
+      { headers: this.getHeaders() }
+    )
+    return response.data.data || []
+  }
+
+  async getOrganizationPayments(orgId: number): Promise<any[]> {
+    const response = await axios.get(
+      `${this.baseUrl}/superadmin/organization/${orgId}/payments/`,
+      { headers: this.getHeaders() }
+    )
+    return response.data.data || []
+  }
+
+  async getContracts(): Promise<any[]> {
+    const response = await axios.get(
+      `${this.baseUrl}/superadmin/contract/`,
+      { headers: this.getHeaders() }
+    )
+    return response.data.data || []
+  }
+
+  async createContract(data: any): Promise<any> {
+    const response = await axios.post(
+      `${this.baseUrl}/superadmin/contract/`,
+      data,
+      { headers: this.getHeaders() }
+    )
+    return response.data.data
+  }
+
+  async getTenantPayments(year?: number, month?: string): Promise<any[]> {
+    let url = `${this.baseUrl}/superadmin/tenant_payments/?`
+    if (year) url += `year=${year}&`
+    if (month) url += `month=${month}&`
+    const response = await axios.get(url, { headers: this.getHeaders() })
+    return response.data.data || []
+  }
+
+  async generateMonthlyReport(year: number, month: number): Promise<any> {
+    const response = await axios.post(
+      `${this.baseUrl}/superadmin/generate_monthly_report/`,
+      { year, month },
+      { headers: this.getHeaders() }
+    )
+    return response.data.data
+  }
+
+  // ========================================================================
+  // PAYMENTS
+  // ========================================================================
+  async createPayment(data: any): Promise<any> {
+    const response = await axios.post(
+      `${this.baseUrl}/payments/create/`,
+      data,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async getUserPayments(): Promise<any[]> {
+    const response = await axios.get(
+      `${this.baseUrl}/payments/history/`,
+      { headers: this.getHeaders() }
+    )
+    return response.data.data || []
+  }
+
   private getHeaders() {
     return {
       'Authorization': this.auth.token,

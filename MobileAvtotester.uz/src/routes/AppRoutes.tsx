@@ -1,21 +1,22 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import Home from './pages/Home/Home'
-import Login from './pages/Auth/Login'
-import Dashboard from './pages/Dashboard/Dashboard'
-import ByTheme from './pages/Dashboard/ByTheme/ByTheme'
-import ByTicket from './pages/Dashboard/ByTicket/ByTicket'
-import SetTests from './pages/Dashboard/SetTests/SetTests'
-import Exam from './pages/Dashboard/Exam/Exam'
-import SolveTest from './pages/Dashboard/SolveTest'
-import TestResult from './pages/Dashboard/TestResult'
-import Statistics from './pages/Dashboard/Statistics'
-import History from './pages/Dashboard/History/History'
-import HistoryReview from './pages/Dashboard/History/HistoryReview'
-import Profile from './pages/profile/Profile'
-import About from './pages/About/About'
-import Connections from './pages/Others/Connections'
-import NotFound from './pages/Others/NotFound'
-import AdminDashboard from './pages/Admin/AdminDashboard'
+import Home from '../pages/Home/Home'
+import Login from '../pages/Auth/Login'
+import Dashboard from '../pages/Dashboard/Dashboard'
+import ByTheme from '../pages/Dashboard/ByTheme/ByTheme'
+import ByTicket from '../pages/Dashboard/ByTicket/ByTicket'
+import SetTests from '../pages/Dashboard/SetTests/SetTests'
+import Exam from '../pages/Dashboard/Exam/Exam'
+import SolveTest from '../pages/Dashboard/SolveTest'
+import TestResult from '../pages/Dashboard/TestResult'
+import Statistics from '../pages/Dashboard/Statistics'
+import History from '../pages/Dashboard/History/History'
+import HistoryReview from '../pages/Dashboard/History/HistoryReview'
+import Profile from '../pages/profile/Profile'
+import About from '../pages/About/About'
+import Connections from '../pages/Others/Connections'
+import NotFound from '../pages/Others/NotFound'
+import AdminDashboard from '../pages/Admin/AdminDashboard'
+import SuperAdminDashboard from '../pages/SuperAdmin/SuperAdminDashboard'
 
 interface AppRoutesProps {
   auth: boolean
@@ -31,10 +32,21 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem('token')
   const userRole = localStorage.getItem('role')
   
-  if (!token || userRole !== 'ADMIN') {
+  if (!token || !['ADMIN', 'TENANT_ADMIN', 'SUPERADMIN'].includes(userRole || '')) {
     return <Navigate to="/" replace />
   }
   
+  return <>{children}</>
+}
+
+const SuperAdminRoute = ({ children }: { children: React.ReactNode }) => {
+  const token = localStorage.getItem('token')
+  const userRole = localStorage.getItem('role')
+
+  if (!token || userRole !== 'SUPERADMIN') {
+    return <Navigate to="/" replace />
+  }
+
   return <>{children}</>
 }
 
@@ -142,6 +154,15 @@ export default function AppRoutes({ auth, onLogout }: AppRoutesProps) {
           <AdminRoute>
             <AdminDashboard />
           </AdminRoute>
+        }
+      />
+
+      <Route
+        path="/superadmin/*"
+        element={
+          <SuperAdminRoute>
+            <SuperAdminDashboard />
+          </SuperAdminRoute>
         }
       />
 
